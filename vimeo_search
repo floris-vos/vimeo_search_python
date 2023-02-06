@@ -20,16 +20,14 @@ class vimeo_search:
         dicti = loads(text)
         results = dict()
         for song in dicti:
-            url = song["clip"]["link"]
-            title = song["clip"]["name"]
-            play_time = song["clip"]["duration"]
-            date = song["clip"]["created_time"]
-            channel = song["clip"]["user"]["name"]
+            title = song["clip"]["name"] + " "
+            while title in results:
+                title += "I"
             results[title] = {
-                "url": url,
-                "play_time":play_time,
-                "date":date[:9],
-                "channel":channel,
-                "title":title
+                "url": song["clip"]["link"],
+                "play_time":song["clip"]["duration"],
+                "date":song["clip"]["created_time"][:7],
+                "channel":song["clip"]["user"]["name"],
+                "title": title
             }
         return results
