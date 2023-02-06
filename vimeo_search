@@ -1,0 +1,35 @@
+from requests import get as request
+from urllib.parse import quote_plus
+from json import loads
+
+class vimeo_search:
+
+    def search_vimeo(self, search_terms):
+        encoded_search = quote_plus(search_terms)
+        item = {}
+        url = f"https://vimeo.com/search?q={encoded_search}"
+        try:
+            headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
+            response = request(url, timeout=10, headers=headers).text
+        except: 
+            return
+        index1 = response.index("vimeo.config = ")
+        index1 = response.index("[", index1)
+        index2 = response.index("}}}]", index1) + 4
+        text = response[index1:index2]
+        dicti = loads(text)
+        results = dict()
+        for song in dicti:
+            url = song["clip"]["link"]
+            title = song["clip"]["name"]
+            play_time = song["clip"]["duration"]
+            date = song["clip"]["created_time"]
+            channel = song["clip"]["user"]["name"]
+            results[title] = {
+                "url": url,
+                "play_time":play_time,
+                "date":date[:9],
+                "channel":channel,
+                "title":title
+            }
+        return results
