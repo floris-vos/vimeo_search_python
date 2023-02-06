@@ -6,7 +6,9 @@ It loads the relavant info as a json object.
 Then from this json object, relevant data is taken. 
 
 :::::::::EXAMPLE:::::
+
 To search for Johnny Cash videos:
+
 vimeo = vimeo_search()
 print(vimeo.search_vimeo("johnny cash"))
 
