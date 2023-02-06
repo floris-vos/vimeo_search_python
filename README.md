@@ -10,6 +10,7 @@ Then from this json object, relevant data is taken.
 To search for Johnny Cash videos:
 
 vimeo = vimeo_search()
+
 print(vimeo.search_vimeo("johnny cash"))
 
 Returns:
